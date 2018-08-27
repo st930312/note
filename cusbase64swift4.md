@@ -1,9 +1,8 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 ## Swift 4 自定義Base64
 
 ### base64 定義：
 
-轉換的時候，將3位元組的資料，先後放入一個24位元的緩衝區中，先來的位元組占高位。資料不足3位元組的話，於緩衝區中剩下的位元用0補足。每次取出6位元（因為 $$2^6 = 64$$），按照其值選擇```ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/```中的字元作為編碼後的輸出，直到全部輸入資料轉換完成。
+轉換的時候，將3位元組的資料，先後放入一個24位元的緩衝區中，先來的位元組占高位。資料不足3位元組的話，於緩衝區中剩下的位元用0補足。每次取出6位元（因為 $2^6 = 64$），按照其值選擇```ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/```中的字元作為編碼後的輸出，直到全部輸入資料轉換完成。
 
 若原資料長度不是3的倍數時且剩下1個輸入資料，則在編碼結果後加2個=；若剩下2個輸入資料，則在編碼結果後加1個=。
 
@@ -78,7 +77,7 @@ t的初始值爲-1。
 依照編碼的思路反向操作 </br>
 每四個base64文字爲一個循環 </br>
 所以有四種不同組法：
-```Swift
+```javascript
 
         for char in self {
             t = t + 1
