@@ -260,4 +260,4 @@ wc -w <文件名> 輸出單詞數統計
 3. awk 用法請參照鳥哥
 
 #### step 2. 將script移動到/etc/cron.daily下面
-註: /etc/cron.daily 為每天4點02分執行
+註: /etc/cron.daily 下檔名不能爲*.sh
