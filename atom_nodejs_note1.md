@@ -9,6 +9,7 @@
 * sudo n {version}
 * npm -version
 * node -v
+<<<<<<< HEAD
 
 
 ### ESLint:
@@ -20,3 +21,5 @@
 ### Nightwatch
 
 ### CommonJS
+=======
+>>>>>>> e41bb820811e0870b82b30a8e321d76206925a8f

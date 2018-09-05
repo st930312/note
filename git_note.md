@@ -9,6 +9,7 @@ $ git cherry-pick 99daed2
 ```
 
 ### Squash:
+<<<<<<< HEAD
 
 #### Merge Squash:
 當其他分支合併進來時，只顯示一個commit</br>
@@ -84,3 +85,5 @@ e41bb82 (origin/master) HEAD@{7}: rebase -i (start): checkout refs/remotes/origi
 ...
 ```
 選擇想要回覆的號碼下指令即可，例：`git reset --hard HEAD@{2}`
+=======
+>>>>>>> e41bb820811e0870b82b30a8e321d76206925a8f
