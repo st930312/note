@@ -9,3 +9,14 @@
 * sudo n {version}
 * npm -version
 * node -v
+
+
+### ESLint:
+
+### Jest
+
+### Karma and Mocha
+
+### Nightwatch
+
+### CommonJS
