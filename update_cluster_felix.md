@@ -1,5 +1,11 @@
 ## 如何更新叢集bundle
 
+### 參考工具：
+
+* splunk
+* syslog-ng
+
+
 ### 思路：
 
 建立一個消息系統的docker container，</br>

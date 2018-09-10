@@ -1,5 +1,8 @@
 # 開發過程記錄
 
+### 2018/09/10
+* graylog_docker_stack
+
 ### 2018/09/05
 * edit skype bot
 
