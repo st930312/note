@@ -84,3 +84,12 @@ e41bb82 (origin/master) HEAD@{7}: rebase -i (start): checkout refs/remotes/origi
 ...
 ```
 選擇想要回覆的號碼下指令即可，例：`git reset --hard HEAD@{2}`
+
+
+### 快速顯示conflic檔案列表：
+`git diff --name-only --diff-filter=U`
+
+### 衝突時簡單選擇檔案：
+
+1. 選擇自己的版本： `git checkout HEAD -- <filename>` or `git checkout --ours -- <filename>`
+2. 選擇他們的版本： `git checkout --theirs -- <filename>`

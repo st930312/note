@@ -1,7 +1,16 @@
 # 開發過程記錄
 
+### 2018/09/14
+* edit graylog_docker_stack
+* edit kafka_practice
+* add 在docker中利用log4j把log傳到graylog
+
+### 2018/09/11
+* edit graylog_docker_stack
+* edit kafka_practice
+
 ### 2018/09/10
-* graylog_docker_stack
+* add graylog_docker_stack
 
 ### 2018/09/05
 * edit skype bot

@@ -185,12 +185,17 @@ error_log syslog:server=graylog:12302,facility=local0,tag=nginx,severity=warn;
 
 #### 設定graylog:
 
-1. 啟動`docker-compose up -d`，瀏覽`http://$SERVER_NAME` </br>
-2. 選擇Content packs: ![](img/gds1.png)
-3. 前往 https://marketplace.graylog.org/addons/6b867cbe-8f5b-4fc9-84d2-fc1a75a0830d 下載並解壓縮
-4. 回到Content packs點擊`Import content pack` 選擇剛才解壓縮的`contenpack.json`並上傳
-5. `Select content packs`會多出`nginx`的選項，選擇`nginx-json`然後點選旁編的`Apply content`。 ![](img/gds2.png)
-6. 到此爲止設定完畢，點選toolbar的`Search`即可看到log記錄。
+1. 下載設定檔到`./graylog/data/config`：
+```bash
+wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/graylog.conf
+wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/log4j2.xml
+```
+2. 啟動`docker-compose up -d`，瀏覽`http://$SERVER_NAME` </br>
+3. 選擇Content packs: ![](img/gds1.png)
+4. 前往 https://marketplace.graylog.org/addons/6b867cbe-8f5b-4fc9-84d2-fc1a75a0830d 下載並解壓縮
+5. 回到Content packs點擊`Import content pack` 選擇剛才解壓縮的`contenpack.json`並上傳
+6. `Select content packs`會多出`nginx`的選項，選擇`nginx-json`然後點選旁編的`Apply content`。 ![](img/gds2.png)
+7. 到此爲止設定完畢，點選toolbar的`Search`即可看到log記錄。
 
 ### 常用query：
 
@@ -228,6 +233,22 @@ error_log syslog:server=graylog:12302,facility=local0,tag=nginx,severity=warn;
 ![](img/gds6.png)
 
 ### 装饰器:
+
+裝飾器允許你在搜尋的過程中修改欄位，而不會影響到硬碟上的資料。它可以讓你的資料變得更容易閱讀，也可以結合不同的欄位資料。</br>
+裝飾器是根據每一個數據流設定的(包含預設數據流)，你也可以呈現一個訊息在不同的數據流。
+</br></br>
+裝飾器是不會保存在硬碟裏的，所以你沒辦法直接搜尋裝飾後的數據流，也無法使用分析器等工具。</br>
+</br>
+
+#### 如何添加裝飾器：
+
+![](http://docs.graylog.org/en/2.4/_images/create_decorator.png)
+
+1. 點擊`Decorators`在你側邊的搜尋欄
+2. 從下拉欄中選擇你想要的裝飾器，然後點擊`apply`
+
+#### Pipeline Decorator:
+
 
 ### log保留時限：
 
