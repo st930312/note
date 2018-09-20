@@ -2,13 +2,16 @@
 
 ### 參考工具：
 
-* splunk
-* syslog-ng
-
+* kafka
 
 ### 思路：
 
-建立一個消息系統的docker container，</br>
-一個bundle建立web界面的更新接收api，並向消息系統推送訊息producer，</br>
-一個bundle建立接收消息系統的consumer，並提供java api給同一個felix內的bundle監聽消息</br>
-一個bundle實現更新邏輯
+* 建立kafka相關的docker container
+* 建一個跨網域的docker volume，docker_felix會mount它
+* 一個bundle建立web界面的更新接收api，並向消息系統推送訊息producer，也實現更新邏輯
+* 一個bundle建立接收消息系統的consumer及producer，並提供java api給同一個felix內的bundle傳遞/監聽消息
+
+### 訊息傳遞順序
+![](img/felix_update.png)
+
+### 跨網域docker volume

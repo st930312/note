@@ -1,5 +1,9 @@
 # 開發過程記錄
 
+### 2018/09/20
+* android_fingerprint_auth
+* 如何更新叢集bundle
+
 ### 2018/09/14
 * edit graylog_docker_stack
 * edit kafka_practice
