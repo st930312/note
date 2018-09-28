@@ -1,5 +1,15 @@
 # 開發過程記錄
 
+### 2018/09/28
+* update_cluster_felix
+
+### 2018/09/27
+* GlusterFS Note
+
+### 2018/09/26
+* 常用unbuntu指令 => 虛擬機磁碟擴展
+* 新增GlusterFS Note
+
 ### 2018/09/20
 * android_fingerprint_auth
 * 如何更新叢集bundle

@@ -15,3 +15,13 @@
 
 ## ubuntu啟動命令位置：
 * 啟動指令下在 /etc/rc.local
+
+## 虛擬機磁碟擴展：
+```bash
+# Clone the .vmdk image to a .vdi.
+vboxmanage clonehd "virtualdisk.vmdk" "new-virtualdisk.vdi" --format vdi
+# Resize the new .vdi image (30720 == 30 GB).
+vboxmanage modifyhd "new-virtualdisk.vdi" --resize 30720
+# Optional; switch back to a .vmdk.
+VBoxManage clonehd "cloned.vdi" "resized.vmdk" --format vmdk
+```

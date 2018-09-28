@@ -135,7 +135,7 @@ public class PatternLockHelper implements PatternLockViewListener {
 
         settingCount = 0;
 
-        settingContent.setTag(settingContent.getVisibility());
+        settingContent.setTag(777);
         settingContent.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
            int visibility = settingContent.getVisibility();
 
