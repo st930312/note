@@ -1,5 +1,8 @@
 # 開發過程記錄
 
+### 2018/10/05
+* 更新graylog_docker_stack
+
 ### 2018/09/28
 * update_cluster_felix
 

@@ -254,3 +254,115 @@ wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/log4j2
 
 ### 計算log可能的大小：
 GB/day x Ret. Days x 1.3 = storage req.
+
+### 透過osgi bundle把mysql log傳送到graylog:
+
+```java
+
+import java.net.InetSocketAddress;
+import java.util.Map;
+
+import org.graylog2.gelfclient.GelfConfiguration;
+import org.graylog2.gelfclient.GelfMessage;
+import org.graylog2.gelfclient.GelfMessageBuilder;
+import org.graylog2.gelfclient.GelfMessageLevel;
+import org.graylog2.gelfclient.GelfTransports;
+import org.graylog2.gelfclient.transport.GelfTransport;
+import org.json.JSONArray;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.kingnet.osgi.http.mysql.MysqlConnectionPool;
+
+@Component
+public class Example {
+
+	private MysqlConnectionPool dbpool;
+	private boolean isStop;
+	private static final Logger log = LoggerFactory.getLogger(Example.class);
+
+	/**
+	 * 新增mysql connection pool依賴
+	 * @param dbpool
+	 */
+	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
+	public void setDbpool(MysqlConnectionPool dbpool) {
+		this.dbpool = dbpool;
+	}
+
+	public void unsetDbpool(MysqlConnectionPool dbpool) {
+		this.dbpool = null;
+	}
+
+	@Activate
+	public void start(BundleContext context) {
+		isStop = false;
+		log.info("start");
+
+		//設定graylog連線機制
+		final GelfConfiguration config = new GelfConfiguration(new InetSocketAddress("graylog", 514))
+				.transport(GelfTransports.UDP)//
+				.queueSize(512)//
+				.connectTimeout(5000)//
+				.reconnectDelay(1000)//
+				.tcpNoDelay(true)//
+				.sendBufferSize(32768);
+
+		//建立graylog傳輸器
+		final GelfTransport transport = GelfTransports.create(config);
+		//建立graylog訊息的builder
+		final GelfMessageBuilder builder = new GelfMessageBuilder("jdbc", "mysql")//
+				.level(GelfMessageLevel.INFO);
+
+		//新增一個thread執行訊息傳輸，避免阻塞osgi main thread
+		new Thread(() -> {
+
+			JSONArray res;
+			try {
+				//j爲頁數40786爲總頁數
+				for (int j = 11789; j < 40786; j++) {
+
+					//判斷程式是否停止
+					if (isStop) {
+						break;
+					}
+					//取得mysql資料
+					res = dbpool.toJSONArray("SELECT * " + "FROM  `Logger` " + "LIMIT " + j * 1000l + ", 1000");
+
+					for (int i = 0; i < res.length(); i++) {
+						//將json轉成map
+						Map<String, Object> map = res.getJSONObject(i).toMap();
+
+						//建立graylog訊息
+						final GelfMessage message = builder.message("%{message}").additionalFields(map).build();
+
+						//傳送訊息
+						transport.send(message);
+
+					}
+					log.info("j =" + j);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			log.info("end");
+		}).start();
+	}
+
+	@Deactivate
+	public void stop(BundleContext context) {
+		isStop = true;
+	}
+}
+
+
+```
