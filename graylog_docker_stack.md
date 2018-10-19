@@ -247,8 +247,56 @@ wget https://raw.githubusercontent.com/Graylog2/graylog-docker/2.4/config/log4j2
 1. 點擊`Decorators`在你側邊的搜尋欄
 2. 從下拉欄中選擇你想要的裝飾器，然後點擊`apply`
 
+#### Syslog severity mapper:
+
+Syslog severity mapper 裝飾器可以讓系統日誌的安全層級數字轉變成可讀的字串。
+例如：應用這個裝飾器在'level'欄位上，將會讓內容由'4'轉變成'Warning (4)'。
+
+你必需要提供這些資訊才能使用Syslog severity mapper裝飾器：
+
+* **Source field:** 包含系統日誌層級的欄位
+* **Target field:** 存放可讀的日誌層級的欄位，如果你想取代原有的欄位，也可以使用舊有的欄位名稱
+
+#### Format string:
+
+Format string 裝飾器提供了一個簡單的方式讓你可以組合不同欄位的內容。
+他也可以用來修改欄位內容並且呈現，而不影響原來欄位的內容。
+
+你必需要提供這些資訊才能使用format string裝飾器：
+
+* **Format string:**
+  一個用來格式化搜尋結果的模式。 你可以利用'\${}'來包住你的搜尋結果的欄位。
+  例如： '\${source}' 將會增加'source'這個欄位的內容到你的字串。
+* **Target field:**
+  用來存放成果字串的欄位名稱
+* **Require all fields (optional):**
+  當你會用到所有欄位時，勾選這個項目
+
+舉個例子，使用這個 format string：
+'Request to \${controller}#\${action} finished in ${took_ms}ms with code ${http_response_code}'，
+將會產生'Request to PostsController#show finished in 57ms with code 200'，
+並會讓這個字串作爲你的搜尋中的其中一個欄位。
+
 #### Pipeline Decorator:
 
+pipeline 裝飾器可以讓現有的'processing pipeline'來處理訊息。
+跟直接使用processing pipeline的差異在於，pipeline裝飾器的結果不會保留下來，它只有在搜尋的時候才會轉換。
+
+你得先有一個processing pipeline才可以使用pipeline裝飾器。
+
+* **Note:**
+  當你的processing pipeline被使用爲裝飾器的時後，請將它從stream中移除，避免重複執行。
+
+#### Debugging decorators:
+
+當你的訊習沒有按照預想的呈現時，或著想知道你的訊息原來是長得如何。
+可以在訊息的'detail'中按下 “Show changes” ，你可以看到裝飾器進行的所有改變。
+
+![](http://docs.graylog.org/en/2.4/_images/pipeline_decorator_show_changes.png)
+
+在這張表中，刪除掉的訊息是紅色的，新增的是綠色的。
+
+### Pipeline:
 
 ### log保留時限：
 
