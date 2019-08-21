@@ -55,6 +55,8 @@
 2.  安裝與源機器版本相同的gitlab: </br>
     `apt-get install -y gitlab-ce=10.1.4-ce.0` </br></br>
 
+## 可安裝版本在這邊尋找 <br>https://packages.gitlab.com/gitlab/gitlab-ce</br>
+
 #### step 4. 還原gitlab: </br></br>
 
 1.  停止執行中的gitlab: </br>
@@ -234,14 +236,14 @@ echo "end scp"
 1. scp 所用到的ssh key 認證方式：
 
 ```
-#建立ssh key
+#建立ssh key（本機）
 ssh-keygen -t rsa -b 4096
 
-#在主機的帳號目錄下新建檔案，例：
+#在遠端主機的帳號目錄下新建檔案，例：
 mkdir /home/aaa/.ssh
 vi /home/aaa/.ssh/authorized_keys
 
-#將步驟一產生的檔案id_rsa.pub裡面的字串複製到authorized_keys裡面，這時候文字檔應該會像：
+#將步驟一產生的檔案id_rsa.pub裡面的字串複製到遠端authorized_keys裡面，這時候文字檔應該會像：
 ssh-rsa AAAAB3NzaC1kc3MAAACBAPWP8FS0iatXx3z7o/alB1pI8a…. root@example.com
 
 此時便可用scp而不需輸入密碼
